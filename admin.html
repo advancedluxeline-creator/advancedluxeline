@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Admin | Crystal View</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <style>
+        :root {
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --accent-glow: rgba(197, 160, 89, 0.2);
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #1a1a1a, #0a0a0a);
+            min-height: 100vh;
+        }
+
+        .admin-nav {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            padding: 2rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .sidebar {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 6rem;
+        }
+
+        .sidebar-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            text-align: left;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sidebar-btn:hover, .sidebar-btn.active {
+            background: var(--input-bg);
+            color: var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .main-content {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            min-height: 70vh;
+        }
+
+        /* --- Improved Form Design --- */
+        .admin-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-control {
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            border-radius: 12px;
+            color: white;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* --- Image Upload Design --- */
+        .file-upload-wrapper {
+            position: relative;
+            border: 2px dashed var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .file-upload-wrapper:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .preview-img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--accent);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            padding: 1.2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 1rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+            filter: brightness(1.1);
+        }
+
+        .login-screen {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 4rem;
+            border-radius: 32px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            .admin-grid { grid-template-columns: 1fr; }
+            .sidebar { position: static; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginSection" class="login-screen">
+        <div class="login-card">
+            <h1 style="margin-bottom: 2rem; color: var(--accent);">ADMIN ACCESS</h1>
+            <form id="loginForm" class="admin-form">
+                <div class="form-group">
+                    <input type="email" id="adminEmail" class="form-control" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="adminPassword" class="form-control" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn-primary">Authenticate</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="adminDashboard" style="display: none;">
+        <nav class="admin-nav">
+            <div class="logo">Crystal View <span style="font-weight: 300; opacity: 0.5;">| Dashboard</span></div>
+            <div style="display: flex; gap: 1rem;">
+                <a href="/" class="btn" style="padding: 0.5rem 1.2rem; font-size: 0.8rem; border: 1px solid var(--glass-border);">Website</a>
+                <button id="logoutBtn" class="btn" style="padding: 0.5rem 1.2rem; font-size: 0.8rem; background: #ff4d4d;">Logout</button>
+            </div>
+        </nav>
+
+        <div class="admin-grid">
+            <aside class="sidebar">
+                <button class="sidebar-btn active" data-tab="rooms">🛏️ Rooms</button>
+                <button class="sidebar-btn" data-tab="events">🎉 Events</button>
+                <button class="sidebar-btn" data-tab="hero">🖼️ Hero Slider</button>
+                <button class="sidebar-btn" data-tab="settings">⚙️ Settings</button>
+            </aside>
+
+            <main class="main-content">
+                <div id="sectionTitle" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;">
+                    <h2 id="currentTabName">Manage Rooms</h2>
+                    <button class="btn-primary" id="addNewBtn" style="margin-top: 0; padding: 0.8rem 1.5rem; font-size: 0.8rem;">+ Add New</button>
+                </div>
+
+                <div id="listContainer">
+                    <!-- Dynamic list here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Universal Form Modal -->
+    <div id="formModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle" style="margin-bottom: 2rem; color: var(--accent);">Edit Room</h2>
+            <form id="dynamicForm" class="admin-form">
+                <div id="formFields" class="admin-form">
+                    <!-- Fields injected here -->
+                </div>
+                <button type="submit" class="btn-primary" id="saveBtn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="/src/admin.js"></script>
+</body>
+</html>

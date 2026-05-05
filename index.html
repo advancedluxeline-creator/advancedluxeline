@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
+    <title>Crystal View Guest House | Luxury Accommodation</title>
+    <meta name="description" content="Experience unparalleled luxury at Crystal View Guest House. Book premium rooms for weddings, parties, and relaxing stays. Located in the heart of Rwanda.">
+    <meta name="keywords" content="Guest House, Rwanda, Luxury Room, Wedding Venue, Party Venue, Booking">
+
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo" id="siteName">Crystal View</div>
+        <div class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#rooms">Rooms</a>
+          <a href="#events">Events</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <button class="btn" id="openBookingBtn" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">Book Now</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero Slider -->
+      <section id="home" style="position:relative;height:100vh;overflow:hidden;">
+        <div id="heroContainer">
+          <!-- Slides injected by main.js -->
+        </div>
+      </section>
+
+      <!-- Rooms Section -->
+      <section id="rooms">
+        <div class="section-header">
+          <h2>Our Luxurious Rooms</h2>
+          <div class="divider"></div>
+          <p style="color: var(--text-muted); margin-top: 1rem;">Choose from our carefully curated selection of premium accommodations.</p>
+        </div>
+        <div class="rooms-grid" id="roomsGrid">
+          <!-- Rooms injected by main.js -->
+        </div>
+      </section>
+
+      <!-- Events Section -->
+      <section id="events" style="background: #111;">
+        <div class="section-header">
+          <h2>Special Events &amp; Promotions</h2>
+          <div class="divider"></div>
+        </div>
+        <div class="events-grid" id="eventsGrid">
+          <!-- Events injected by main.js -->
+        </div>
+      </section>
+
+      <!-- Footer / Contact -->
+      <footer id="contact">
+        <div class="logo" id="footerName" style="margin-bottom: 2rem;">Crystal View</div>
+        <div class="contact-info" id="footerContact">
+          <!-- Injected by main.js -->
+        </div>
+        <div style="margin-top: 3rem;">
+          <a href="/admin.html" style="color: var(--text-muted); font-size: 0.8rem; text-decoration: none; opacity: 0.4;">Admin Dashboard</a>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 1rem;">&copy; 2026 Crystal View Guest House. All Rights Reserved.</p>
+      </footer>
+    </main>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+      <div class="modal-content">
+        <span class="close-booking" style="position:absolute;top:1rem;right:1.5rem;font-size:2rem;cursor:pointer;color:#a0a0a0;">&times;</span>
+        <h2 style="margin-bottom: 2rem; text-align: center; color: var(--accent);">📅 Book Your Stay</h2>
+        <form class="booking-form" id="whatsappForm">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required placeholder="e.g. John Doe">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required placeholder="e.g. 078XXXXXXX">
+          </div>
+          <div class="form-group">
+            <label for="roomSelect">Select Room</label>
+            <select id="roomSelect" name="roomSelect" required>
+              <option value="">-- Choose a Room --</option>
+              <!-- Dynamically populated from your rooms -->
+            </select>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="checkIn">Check-in Date</label>
+              <input type="date" id="checkIn" name="checkIn" required>
+            </div>
+            <div class="form-group">
+              <label for="checkOut">Check-out Date</label>
+              <input type="date" id="checkOut" name="checkOut" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="days">Number of Nights</label>
+            <input type="number" id="days" name="days" readonly placeholder="Calculated automatically" style="opacity:0.6;">
+          </div>
+          <div class="form-group">
+            <label for="message">Special Requests (Optional)</label>
+            <textarea id="message" name="message" rows="3" placeholder="Any special requests?"></textarea>
+          </div>
+          <button type="submit" class="btn" style="width:100%;text-align:center;">✅ Confirm &amp; Send via WhatsApp</button>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
