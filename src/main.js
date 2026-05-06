@@ -18,6 +18,7 @@ const DEFAULT_SETTINGS = {
   guest_house_name: 'Crystal View Guest House',
   whatsapp_number: '250780000000',
   address: 'Kigali, Rwanda',
+  email: 'contact@crystalview.com',
 };
 
 // DOM
@@ -148,9 +149,14 @@ async function initRooms() {
         <div class="room-info">
           <h3>${room.name}</h3>
           <p class="price">${Number(room.price).toLocaleString()} RWF <span style="font-size:0.8rem;opacity:0.6;">/ night</span></p>
-          ${room.description ? `<p style="opacity:0.7;font-size:0.9rem;margin-bottom:1rem;">${room.description}</p>` : ''}
-          ${features.length > 0 ? `<ul class="features">${features.map(f => `<li>${f}</li>`).join('')}</ul>` : ''}
-          <button class="btn book-btn" data-room="${room.name}">Book this Room</button>
+          ${room.description ? `<p style="opacity:0.7;font-size:0.9rem;margin-bottom:1.5rem;">${room.description}</p>` : ''}
+          
+          ${features.length > 0 ? `
+            <div class="amenities-title"><span>✨</span> Included for Free</div>
+            <ul class="features">${features.map(f => `<li>${f}</li>`).join('')}</ul>
+          ` : ''}
+          
+          <button class="btn book-btn" data-room="${room.name}" style="width:100%; margin-top:0.5rem;">BOOK NOW</button>
         </div>
       </div>`;
   }).join('');
@@ -212,9 +218,11 @@ async function initFooter() {
 
   if (footerContact) {
     footerContact.innerHTML = `
+      <h4>Contact Us</h4>
+      <div class="contact-item"><span>📍</span><span>${addr}</span></div>
       <div class="contact-item"><span>📞</span><a href="tel:+${wa}">${s.whatsapp_number || wa}</a></div>
-      <div class="contact-item"><span>💬</span><a href="https://wa.me/${wa}" target="_blank">WhatsApp Us</a></div>
-      <div class="contact-item"><span>📍</span><span>${addr}</span></div>`;
+      <div class="contact-item"><span>✉️</span><a href="mailto:${s.email || DEFAULT_SETTINGS.email}">${s.email || DEFAULT_SETTINGS.email}</a></div>
+      <div class="contact-item"><span>💬</span><a href="https://wa.me/${wa}" target="_blank">Chat on WhatsApp</a></div>`;
   }
 
   const waForm = document.getElementById('whatsappForm');
@@ -224,10 +232,26 @@ async function initFooter() {
       const fd = new FormData(waForm);
       const checkin  = fd.get('checkIn');
       const checkout = fd.get('checkOut');
-      const days = checkin && checkout
+      const nights = checkin && checkout
         ? Math.max(1, Math.round((new Date(checkout) - new Date(checkin)) / 86400000))
-        : fd.get('days') || '?';
-      const msg = `🏨 *New Booking Request*\n*Name:* ${fd.get('fullName')}\n*Room:* ${fd.get('roomSelect')}\n*Check-in:* ${checkin || '-'}\n*Check-out:* ${checkout || '-'}\n*Nights:* ${days}`;
+        : parseInt(fd.get('days')) || 1;
+      
+      const guests = fd.get('guests') || '1';
+      const roomOpt = roomSelect.options[roomSelect.selectedIndex];
+      const pricePerNight = parseInt(roomOpt.dataset.price) || 0;
+      const totalAmount = pricePerNight * nights;
+
+      const msg = `🏨 *New Booking Request*
+*Name:* ${fd.get('fullName')}
+*Room:* ${fd.get('roomSelect')}
+*Guests:* ${guests}
+*Check-in:* ${checkin || '-'}
+*Check-out:* ${checkout || '-'}
+*Nights:* ${nights}
+*Total Amount:* ${totalAmount.toLocaleString()} RWF
+
+*Requests:* ${fd.get('message') || 'None'}`;
+      
       window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`, '_blank');
       bookingModal.classList.remove('active');
     };
@@ -243,6 +267,7 @@ function populateRoomSelect(rooms) {
   (rooms || []).forEach(room => {
     const opt = document.createElement('option');
     opt.value = room.name;
+    opt.dataset.price = room.price;
     opt.textContent = `${room.name} — ${Number(room.price).toLocaleString()} RWF/night`;
     roomSelect.appendChild(opt);
   });

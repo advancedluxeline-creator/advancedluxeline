@@ -229,6 +229,7 @@ async function renderSettings() {
       <div class="form-group"><label>Guest House Name</label><input type="text" class="form-control" name="guest_house_name" value="${s.guest_house_name || ''}"></div>
       <div class="form-group"><label>WhatsApp Number (with country code)</label><input type="text" class="form-control" name="whatsapp_number" value="${s.whatsapp_number || ''}"></div>
       <div class="form-group"><label>Physical Address</label><input type="text" class="form-control" name="address" value="${s.address || ''}"></div>
+      <div class="form-group"><label>Business Email Address</label><input type="email" class="form-control" name="email" value="${s.email || ''}"></div>
 
       <h3 style="color:var(--accent);margin-top:1rem;">🔐 Admin Login Credentials</h3>
       <div class="form-group"><label>Admin Email</label><input type="email" class="form-control" name="admin_email" value="${s.admin_email || DEFAULT_SETTINGS.admin_email}"></div>
