@@ -3,6 +3,7 @@
 // Reads live data from Google Sheets via Apps Script.
 // Falls back to localStorage cache when offline.
 // ============================================================
+import './style.css';
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzqROz_K8-gEAqkNzIFVbJMFbfBWfJOQrXvQqvyCRLsxj_8zVdrU8klRX7foLq_3_G5_w/exec';
 

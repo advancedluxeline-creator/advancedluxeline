@@ -3,6 +3,7 @@
 // Data → Google Sheets via Apps Script
 // Images → Google Drive (paste share link)
 // ============================================================
+import './style.css';
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzqROz_K8-gEAqkNzIFVbJMFbfBWfJOQrXvQqvyCRLsxj_8zVdrU8klRX7foLq_3_G5_w/exec';
 
