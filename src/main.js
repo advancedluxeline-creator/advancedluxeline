@@ -187,17 +187,30 @@ async function initEvents() {
     eventsGrid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:4rem;opacity:0.4;"><p style="font-size:3rem;">🎉</p><p>No events added yet.</p></div>`;
     return;
   }
-  eventsGrid.innerHTML = events.map(ev => `
-    <div class="event-card animate-reveal">
-      ${ev.image
-        ? `<img src="${driveUrl(ev.image)}" alt="${ev.title}" style="width:100%;height:220px;object-fit:cover;">`
-        : `<div style="width:100%;height:220px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:4rem;">🎉</div>`}
-      <div class="event-overlay">
-        <span class="event-date">${ev.date || ''}</span>
-        <h3>${ev.title}</h3>
-        <p>${ev.description || ''}</p>
-      </div>
-    </div>`).join('');
+  eventsGrid.innerHTML = events.map(ev => {
+    const title = ev.title || '';
+    const desc  = ev.description || '';
+    const text  = (title + ' ' + desc).toLowerCase();
+    
+    let badge = '';
+    if (text.includes('promo'))    badge = '<span class="promo-badge">PROMO</span>';
+    else if (text.includes('discount')) badge = '<span class="promo-badge">OFFER</span>';
+    else if (text.includes('live'))     badge = '<span class="promo-badge" style="background:#ff4d4d;color:#fff;">LIVE</span>';
+    else if (text.includes('sauna') || text.includes('massage')) badge = '<span class="promo-badge" style="background:#4caf50;color:#fff;">SPA</span>';
+
+    return `
+      <div class="event-card animate-reveal">
+        ${badge}
+        ${ev.image
+          ? `<img src="${driveUrl(ev.image)}" alt="${title}" style="width:100%;height:100%;object-fit:cover;">`
+          : `<div style="width:100%;height:100%;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:4rem;">✨</div>`}
+        <div class="event-overlay">
+          <span class="event-date">${ev.date || ''}</span>
+          <h3 style="margin-bottom:0.5rem; color:#fff;">${title}</h3>
+          <p style="opacity:0.6; font-size:0.85rem;">${desc}</p>
+        </div>
+      </div>`;
+  }).join('');
   setupObserver();
 }
 

@@ -45,11 +45,14 @@
         </div>
       </section>
 
-      <!-- Events Section -->
-      <section id="events" style="background: #111;">
+      <!-- Experience Section -->
+      <section id="events" style="background: #0a0a0a;">
         <div class="section-header">
-          <h2>Special Events &amp; Promotions</h2>
+          <h2 style="font-size: clamp(2rem, 5vw, 3.5rem);">Relaxation & Experience</h2>
           <div class="divider"></div>
+          <p style="color: var(--text-muted); margin-top: 1.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+            From soothing sauna & massage sessions to vibrant live music and exclusive promotions, discover our premium services designed for your ultimate comfort.
+          </p>
         </div>
         <div class="events-grid" id="eventsGrid">
           <!-- Events injected by main.js -->
@@ -124,7 +127,7 @@
               <!-- Dynamically populated from your rooms -->
             </select>
           </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-row">
             <div class="form-group">
               <label for="checkIn">Check-in Date</label>
               <input type="date" id="checkIn" name="checkIn" required>
@@ -134,7 +137,7 @@
               <input type="date" id="checkOut" name="checkOut" required>
             </div>
           </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-row">
             <div class="form-group">
               <label for="days">Number of Nights</label>
               <input type="number" id="days" name="days" readonly placeholder="Calculated" style="opacity:0.6;">
@@ -146,9 +149,9 @@
           </div>
           <div class="form-group">
             <label for="message">Special Requests (Optional)</label>
-            <textarea id="message" name="message" rows="2" placeholder="Any special requests?"></textarea>
+            <textarea id="message" name="message" rows="3" placeholder="Any special requests?"></textarea>
           </div>
-          <button type="submit" class="btn" style="width:100%;text-align:center;">✅ Confirm &amp; Send via WhatsApp</button>
+          <button type="submit" class="btn" style="width:100%;text-align:center;margin-top:1rem;">✅ Confirm &amp; Send via WhatsApp</button>
         </form>
       </div>
     </div>

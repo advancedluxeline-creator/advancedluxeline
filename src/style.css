@@ -360,12 +360,35 @@ section {
 .event-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.95));
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 10%, transparent 70%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 3rem;
+  padding: 2.5rem;
   transition: var(--transition);
+}
+
+.promo-badge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: var(--accent);
+  color: #000;
+  padding: 0.5rem 1.2rem;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 5;
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 .event-card:hover img {
@@ -401,31 +424,72 @@ section {
 
 .modal-content {
   background: #0d0d0d;
-  padding: 4rem;
-  border-radius: 40px;
+  padding: 3.5rem;
+  border-radius: 32px;
   width: 100%;
-  max-width: 600px;
+  max-width: 550px;
   max-height: 90vh;
   overflow-y: auto;
   border: 1px solid var(--glass-border);
   position: relative;
-  box-shadow: 0 0 100px rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 100px rgba(0,0,0,0.5), 0 0 40px rgba(212, 175, 55, 0.05);
+}
+
+.booking-form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-left: 0.5rem;
 }
 
 .form-group input, .form-group textarea, .form-group select {
-  padding: 1.2rem;
-  background: rgba(255,255,255,0.03);
+  width: 100%;
+  padding: 1.1rem 1.4rem;
+  background: rgba(255,255,255,0.04);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   color: var(--text);
   font-family: inherit;
+  font-size: 0.95rem;
   transition: var(--transition);
 }
 
-.form-group input:focus {
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
   outline: none;
   border-color: var(--accent);
-  background: rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.form-group select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.2rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+@media (max-width: 600px) {
+  .form-row { grid-template-columns: 1fr; }
 }
 
 /* --- Footer --- */
