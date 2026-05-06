@@ -243,6 +243,7 @@ async function initFooter() {
 
       const msg = `🏨 *New Booking Request*
 *Name:* ${fd.get('fullName')}
+*Phone:* ${fd.get('phone')}
 *Room:* ${fd.get('roomSelect')}
 *Guests:* ${guests}
 *Check-in:* ${checkin || '-'}

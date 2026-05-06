@@ -551,5 +551,12 @@ footer {
   section { padding: 6rem 5%; }
   .section-header h2 { font-size: 2.5rem; }
   .rooms-grid { grid-template-columns: 1fr; }
+  .footer-grid { 
+    grid-template-columns: 1fr; 
+    gap: 3rem;
+    text-align: center;
+  }
+  .contact-item { justify-content: center; }
+  .social-links { justify-content: center; }
   .modal-content { padding: 2rem; }
 }
