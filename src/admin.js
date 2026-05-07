@@ -5,11 +5,11 @@
 // ============================================================
 import './style.css';
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzqROz_K8-gEAqkNzIFVbJMFbfBWfJOQrXvQqvyCRLsxj_8zVdrU8klRX7foLq_3_G5_w/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJ44sxBzp_BqqVrJGu6zVkiQ0kPPUGR8cCuY8zdjkPfgDiISEAN6eSpQULBjNwE1nf/exec';
 
 const DEFAULT_SETTINGS = {
-  guest_house_name: 'Crystal View Guest House',
-  whatsapp_number: '250780000000',
+  guest_house_name: 'ADVANCED LUXE LINE LTD',
+  whatsapp_number: '25078893043',
   address: 'Kigali, Rwanda',
   admin_email: 'guesthouse@gmail.com',
   admin_password: 'guest123',
@@ -91,6 +91,13 @@ function showLogin() {
 function showDashboard() {
   loginSection.style.display = 'none';
   adminDashboard.style.display = 'block';
+  
+  // Force admin logo name
+  const adminLogo = adminDashboard.querySelector('.logo');
+  if (adminLogo) {
+    adminLogo.innerHTML = 'ADVANCED LUXE LINE <span style="font-weight: 300; opacity: 0.5; font-style: normal;">| Dashboard</span>';
+  }
+
   loadSection(currentTab);
 }
 
@@ -222,6 +229,11 @@ async function renderSettings() {
     const rows = await fetchTab('settings');
     rows.forEach(r => { if (r.key) s[r.key] = r.value; });
   } catch { /* use defaults */ }
+
+  // Force rebranded name if it's still default in settings
+  if (s.guest_house_name && s.guest_house_name.toLowerCase().includes('crystal view')) {
+    s.guest_house_name = 'ADVANCED LUXE LINE LTD';
+  }
 
   listContainer.innerHTML = `
     <form id="settingsForm" style="max-width:600px;display:grid;gap:1.5rem;">

@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --primary: #0a0a0a;
-  --accent: #d4af37; /* Royal Gold */
-  --accent-light: #e6c87a;
+  --primary: #5d1010; /* Deep Burgundy */
+  --accent: #ffd700; /* Gold */
+  --accent-light: #ffe44d;
   --text: #f5f5f5;
-  --text-muted: #8e8e8e;
-  --bg-dark: #050505;
+  --text-muted: #a0a0a0;
+  --bg-dark: #0a0505;
   --card-bg: rgba(255, 255, 255, 0.03);
-  --glass: rgba(15, 15, 15, 0.7);
+  --glass: rgba(10, 5, 5, 0.85);
   --glass-border: rgba(255, 255, 255, 0.08);
   --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  --shadow: 0 20px 40px rgba(0,0,0,0.4);
+  --shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
 
 * {
@@ -37,24 +37,45 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 1.2rem 8%;
+  padding: 0.8rem 8%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--glass-border);
+  background: var(--primary); /* Solid Burgundy from Flyer */
+  border-bottom: 2px solid var(--accent);
   transition: var(--transition);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
 }
 
 .logo {
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: 4px;
-  color: var(--accent);
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #fff;
+  font-style: italic;
   text-transform: uppercase;
-  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+  /* Premium Outline effect from Flyer */
+  text-shadow: 
+    -1.5px -1.5px 0 #000,  
+     1.5px -1.5px 0 #000,
+    -1.5px  1.5px 0 #000,
+     1.5px  1.5px 0 #000,
+     4px 4px 0px var(--primary);
+  display: flex;
+  flex-direction: column;
+  line-height: 0.85;
+}
+
+.logo::after {
+  content: 'LUXE LINE LTD';
+  font-size: 0.95rem;
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-top: 0.3rem;
+  text-shadow: none;
 }
 
 .nav-links {
@@ -95,21 +116,37 @@ nav {
 /* --- Buttons --- */
 .btn {
   padding: 1.1rem 2.8rem;
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  background: var(--accent);
   color: #000;
-  border: none;
-  font-weight: 700;
+  border: 1px solid var(--accent);
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
   cursor: pointer;
   transition: var(--transition);
-  border-radius: 100px;
+  border-radius: 4px; /* More angular, like the logo */
   text-decoration: none;
   display: inline-block;
   font-size: 0.85rem;
-  box-shadow: 0 15px 30px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
   position: relative;
   overflow: hidden;
+}
+
+#openBookingBtn {
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  padding: 0.7rem 1.8rem !important;
+  border-radius: 50px;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+}
+
+#openBookingBtn:hover {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
 }
 
 .btn::before {
@@ -164,7 +201,7 @@ nav {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, transparent, rgba(0,0,0,0.8));
+  background: radial-gradient(circle, transparent, rgba(93,16,16,0.3), rgba(0,0,0,0.9));
   z-index: 1;
 }
 
@@ -561,23 +598,62 @@ footer {
   transform: translateY(-5px);
 }
 
+.contact-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  padding: 2rem;
+  border-radius: 20px;
+  display: grid;
+  gap: 1.5rem;
+}
+
 .contact-item {
   display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  align-items: center;
+  gap: 1.2rem;
 }
 
-.contact-item span:first-child {
-  color: var(--accent);
+.contact-icon {
+  width: 45px;
+  height: 45px;
+  background: var(--primary);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.2rem;
+  color: var(--accent);
+  flex-shrink: 0;
 }
 
-.contact-item a, .contact-item span:last-child {
-  color: var(--text-muted);
-  text-decoration: none;
+.contact-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-text strong {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+
+.contact-text span, .contact-text a {
+  color: var(--text);
   font-size: 0.95rem;
-  line-height: 1.6;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.wa-link {
+  color: #25d366 !important;
+  font-weight: 600;
+}
+
+.contact-text a:hover {
+  color: var(--accent);
 }
 
 /* --- Animations --- */

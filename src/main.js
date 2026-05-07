@@ -5,7 +5,7 @@
 // ============================================================
 import './style.css';
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzqROz_K8-gEAqkNzIFVbJMFbfBWfJOQrXvQqvyCRLsxj_8zVdrU8klRX7foLq_3_G5_w/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJ44sxBzp_BqqVrJGu6zVkiQ0kPPUGR8cCuY8zdjkPfgDiISEAN6eSpQULBjNwE1nf/exec';
 
 const CACHE = {
   rooms: 'cv_cache_rooms',
@@ -15,10 +15,10 @@ const CACHE = {
 };
 
 const DEFAULT_SETTINGS = {
-  guest_house_name: 'Crystal View Guest House',
-  whatsapp_number: '250780000000',
+  guest_house_name: 'ADVANCED LUXE LINE LTD',
+  whatsapp_number: '25078893043',
   address: 'Kigali, Rwanda',
-  email: 'contact@crystalview.com',
+  email: 'advancedluxeline6@gmail.com',
 };
 
 // DOM
@@ -90,8 +90,8 @@ async function initHero() {
     heroContainer.innerHTML = `
       <div class="hero-slide active" style="background:linear-gradient(135deg,#1a1a1a,#0d0d0d);">
         <div class="hero-content">
-          <h1>Welcome to Crystal View</h1>
-          <p>Your luxury escape awaits.</p>
+          <h1>Welcome to ADVANCED LUXE LINE</h1>
+          <p>Your premium escape awaits.</p>
           <div class="hero-btns"><a href="#rooms" class="btn">Explore Rooms</a></div>
         </div>
       </div>`;
@@ -135,11 +135,19 @@ async function initRooms() {
     const features = room.features
       ? room.features.split(',').map(f => f.trim()).filter(Boolean)
       : [];
+    let rname = room.name || 'Luxury Room';
+    // Replace generic placeholder names with "Real" Luxe names
+    if (rname.toLowerCase().includes('room')) {
+      const index = rooms.indexOf(room);
+      const luxeNames = ['Presidential Suite', 'Executive King Room', 'Royal Garden View', 'Premium Deluxe Suite', 'Luxe Terrace Room'];
+      rname = luxeNames[index % luxeNames.length];
+    }
+
     return `
       <div class="room-card animate-reveal">
         <div class="room-gallery">
           ${mainImg
-            ? `<img src="${mainImg}" alt="${room.name}" class="room-img" id="rimg-${room.id}">`
+            ? `<img src="${mainImg}" alt="${rname}" class="room-img" id="rimg-${room.id}">`
             : `<div style="width:100%;height:220px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:4rem;border-radius:16px 16px 0 0;">🛏️</div>`}
           ${images.length > 1 ? `
             <div class="room-thumbnails">
@@ -147,7 +155,7 @@ async function initRooms() {
             </div>` : ''}
         </div>
         <div class="room-info">
-          <h3>${room.name}</h3>
+          <h3>${rname}</h3>
           <p class="price">${Number(room.price).toLocaleString()} RWF <span style="font-size:0.8rem;opacity:0.6;">/ night</span></p>
           ${room.description ? `<p style="opacity:0.7;font-size:0.9rem;margin-bottom:1.5rem;">${room.description}</p>` : ''}
           
@@ -219,23 +227,52 @@ async function initEvents() {
 // ============================================================
 async function initFooter() {
   const s = await fetchSettings();
-  const name = s.guest_house_name || DEFAULT_SETTINGS.guest_house_name;
-  const wa   = (s.whatsapp_number || DEFAULT_SETTINGS.whatsapp_number).replace(/\s+/g, '');
-  const addr = s.address || DEFAULT_SETTINGS.address;
+  let name = s.guest_house_name || DEFAULT_SETTINGS.guest_house_name;
+  
+  // Force rebranding if the backend still has the old name
+  if (name.toLowerCase().includes('crystal view') || name.toLowerCase().includes('advanced luxe line')) {
+    name = 'ADVANCED LUXE LINE';
+  }
 
   document.title = name;
   const siteName = document.getElementById('siteName');
-  if (siteName) siteName.textContent = name;
+  if (siteName) siteName.textContent = 'ADVANCED'; // Keep logo split
   const footerName = document.getElementById('footerName');
-  if (footerName) footerName.textContent = name;
+  if (footerName) footerName.textContent = 'ADVANCED';
 
   if (footerContact) {
     footerContact.innerHTML = `
-      <h4>Contact Us</h4>
-      <div class="contact-item"><span>📍</span><span>${addr}</span></div>
-      <div class="contact-item"><span>📞</span><a href="tel:+${wa}">${s.whatsapp_number || wa}</a></div>
-      <div class="contact-item"><span>✉️</span><a href="mailto:${s.email || DEFAULT_SETTINGS.email}">${s.email || DEFAULT_SETTINGS.email}</a></div>
-      <div class="contact-item"><span>💬</span><a href="https://wa.me/${wa}" target="_blank">Chat on WhatsApp</a></div>`;
+      <h4>Find Us</h4>
+      <div class="contact-card">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-text">
+            <strong>Location</strong>
+            <span>${addr}</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-text">
+            <strong>Phone</strong>
+            <a href="tel:+${wa}">${s.whatsapp_number || wa}</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-text">
+            <strong>Email</strong>
+            <a href="mailto:${s.email || DEFAULT_SETTINGS.email}">${s.email || DEFAULT_SETTINGS.email}</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">💬</div>
+          <div class="contact-text">
+            <strong>WhatsApp</strong>
+            <a href="https://wa.me/${wa}" target="_blank" class="wa-link">Chat with us live</a>
+          </div>
+        </div>
+      </div>`;
   }
 
   const waForm = document.getElementById('whatsappForm');
