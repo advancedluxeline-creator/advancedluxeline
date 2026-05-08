@@ -135,13 +135,7 @@ async function initRooms() {
     const features = room.features
       ? room.features.split(',').map(f => f.trim()).filter(Boolean)
       : [];
-    let rname = room.name || 'Luxury Room';
-    // Replace generic placeholder names with "Real" Luxe names
-    if (rname.toLowerCase().includes('room')) {
-      const index = rooms.indexOf(room);
-      const luxeNames = ['Presidential Suite', 'Executive King Room', 'Royal Garden View', 'Premium Deluxe Suite', 'Luxe Terrace Room'];
-      rname = luxeNames[index % luxeNames.length];
-    }
+    const rname = room.name || 'Luxury Room';
 
     return `
       <div class="room-card animate-reveal">
@@ -156,7 +150,10 @@ async function initRooms() {
         </div>
         <div class="room-info">
           <h3>${rname}</h3>
-          <p class="price">${Number(room.price).toLocaleString()} RWF <span style="font-size:0.8rem;opacity:0.6;">/ night</span></p>
+          <p class="price">
+            ${Number(room.price).toLocaleString()} RWF ${room.price_usd ? `/ $${room.price_usd}` : ''}
+            <span style="font-size:0.8rem;opacity:0.6;">/ night</span>
+          </p>
           ${room.description ? `<p style="opacity:0.7;font-size:0.9rem;margin-bottom:1.5rem;">${room.description}</p>` : ''}
           
           ${features.length > 0 ? `
@@ -288,8 +285,10 @@ async function initFooter() {
       
       const guests = fd.get('guests') || '1';
       const roomOpt = roomSelect.options[roomSelect.selectedIndex];
-      const pricePerNight = parseInt(roomOpt.dataset.price) || 0;
-      const totalAmount = pricePerNight * nights;
+      const priceRWF = parseInt(roomOpt.dataset.price) || 0;
+      const priceUSD = parseInt(roomOpt.dataset.priceUsd) || 0;
+      const totalRWF = priceRWF * nights;
+      const totalUSD = priceUSD * nights;
 
       const msg = `🏨 *New Booking Request*
 *Name:* ${fd.get('fullName')}
@@ -299,7 +298,7 @@ async function initFooter() {
 *Check-in:* ${checkin || '-'}
 *Check-out:* ${checkout || '-'}
 *Nights:* ${nights}
-*Total Amount:* ${totalAmount.toLocaleString()} RWF
+*Total Amount:* ${totalRWF.toLocaleString()} RWF ${totalUSD ? `/ $${totalUSD.toLocaleString()}` : ''}
 
 *Requests:* ${fd.get('message') || 'None'}`;
       
@@ -319,7 +318,8 @@ function populateRoomSelect(rooms) {
     const opt = document.createElement('option');
     opt.value = room.name;
     opt.dataset.price = room.price;
-    opt.textContent = `${room.name} — ${Number(room.price).toLocaleString()} RWF/night`;
+    opt.dataset.priceUsd = room.price_usd || 0;
+    opt.textContent = `${room.name} — ${Number(room.price).toLocaleString()} RWF ${room.price_usd ? `/ $${room.price_usd}` : ''} / night`;
     roomSelect.appendChild(opt);
   });
   if (!rooms || rooms.length === 0) {

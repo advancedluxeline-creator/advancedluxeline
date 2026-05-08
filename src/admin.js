@@ -191,7 +191,11 @@ async function loadSection(tab) {
           ${getItemThumb(item, tab)}
           <div>
             <h3 style="color:var(--accent);margin-bottom:0.3rem;">${item.name || item.title || 'Untitled'}</h3>
-            <p style="opacity:0.5;font-size:0.9rem;">${item.price ? Number(item.price).toLocaleString() + ' RWF / night' : (item.date || item.subtitle || '')}</p>
+            <p style="opacity:0.5;font-size:0.9rem;">
+              ${item.price ? Number(item.price).toLocaleString() + ' RWF' : ''} 
+              ${item.price_usd ? ' / $' + item.price_usd : ''}
+              ${item.price || item.price_usd ? ' / night' : (item.date || item.subtitle || '')}
+            </p>
           </div>
         </div>
         <div style="display:flex;gap:0.75rem;">
@@ -308,7 +312,10 @@ function buildFormFields(item) {
     const existingImgs = item?.image_urls ? item.image_urls.split(',').map(u => u.trim()).filter(Boolean) : [];
     return `
       <div class="form-group"><label>Room Name</label><input type="text" class="form-control" name="name" value="${item?.name || ''}" required placeholder="e.g. Deluxe Suite"></div>
-      <div class="form-group"><label>Price per Night (RWF)</label><input type="number" class="form-control" name="price" value="${item?.price || ''}" required placeholder="e.g. 35000"></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div class="form-group"><label>Price (RWF)</label><input type="number" class="form-control" name="price" value="${item?.price || ''}" required placeholder="e.g. 35000"></div>
+        <div class="form-group"><label>Price (USD $)</label><input type="number" class="form-control" name="price_usd" value="${item?.price_usd || ''}" required placeholder="e.g. 35"></div>
+      </div>
       <div class="form-group"><label>Description</label><textarea class="form-control" name="description" rows="3" placeholder="Describe this room...">${item?.description || ''}</textarea></div>
       <div class="form-group">
         <label>Room Photos — Google Drive Links</label>

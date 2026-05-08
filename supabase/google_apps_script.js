@@ -29,10 +29,19 @@ function doGet(e) {
   if (action === 'add') {
     var data = JSON.parse(e.parameter.data);
     if (!data.id) data.id = new Date().getTime().toString();
+    
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(Object.keys(data));
     }
-    var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    
+    // Auto-add missing columns
+    var headers = sheet.getRange(1, 1, 1, Math.max(1, sheet.getLastColumn())).getValues()[0];
+    var newKeys = Object.keys(data).filter(function(k) { return headers.indexOf(k) === -1; });
+    if (newKeys.length > 0) {
+      sheet.getRange(1, headers.length + 1, 1, newKeys.length).setValues([newKeys]);
+      headers = headers.concat(newKeys);
+    }
+    
     sheet.appendRow(headers.map(function(h) { return data[h] !== undefined ? data[h] : ''; }));
     return out('{"ok":true}');
   }
@@ -42,11 +51,23 @@ function doGet(e) {
     var data = JSON.parse(e.parameter.data);
     var all  = sheet.getDataRange().getValues();
     var hdrs = all[0];
+    
+    // Auto-add missing columns on update too
+    var newKeys = Object.keys(data).filter(function(k) { return hdrs.indexOf(k) === -1; });
+    if (newKeys.length > 0) {
+      sheet.getRange(1, hdrs.length + 1, 1, newKeys.length).setValues([newKeys]);
+      hdrs = hdrs.concat(newKeys);
+      // Refresh 'all' to include new columns if needed, but for simple update we just need headers
+    }
+    
     var idIdx = hdrs.indexOf('id');
     for (var i = 1; i < all.length; i++) {
       if (String(all[i][idIdx]) === String(data.id)) {
         var newRow = hdrs.map(function(h) {
-          return data[h] !== undefined ? data[h] : all[i][hdrs.indexOf(h)];
+          // If the data has the value, use it. Otherwise, use existing value if it exists in 'all', else empty.
+          if (data[h] !== undefined) return data[h];
+          var oldIdx = all[0].indexOf(h); // Use original headers to find index in 'all'
+          return oldIdx !== -1 ? all[i][oldIdx] : '';
         });
         sheet.getRange(i + 1, 1, 1, hdrs.length).setValues([newRow]);
         break;

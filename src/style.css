@@ -334,6 +334,10 @@ section {
   font-weight: 700;
   margin-bottom: 1.5rem;
   font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .amenities-title {
