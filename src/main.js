@@ -231,6 +231,9 @@ async function initFooter() {
     name = 'ADVANCED LUXE LINE';
   }
 
+  const wa   = s.whatsapp_number || DEFAULT_SETTINGS.whatsapp_number;
+  const addr = s.address         || DEFAULT_SETTINGS.address;
+
   document.title = name;
   const siteName = document.getElementById('siteName');
   if (siteName) siteName.textContent = 'ADVANCED'; // Keep logo split
