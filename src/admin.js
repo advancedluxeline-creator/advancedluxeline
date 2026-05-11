@@ -10,7 +10,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJ44sxBzp_BqqVrJGu6
 const DEFAULT_SETTINGS = {
   guest_house_name: 'ADVANCED LUXE LINE LTD',
   whatsapp_number: '25078893043',
-  address: 'Kigali, Rwanda',
+  address: 'ADVANCED LUXE LINE LTD, NM 34 St, Musanze',
   admin_email: 'guesthouse@gmail.com',
   admin_password: 'guest123',
 };

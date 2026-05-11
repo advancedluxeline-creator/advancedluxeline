@@ -17,7 +17,7 @@ const CACHE = {
 const DEFAULT_SETTINGS = {
   guest_house_name: 'ADVANCED LUXE LINE LTD',
   whatsapp_number: '25078893043',
-  address: 'Kigali, Rwanda',
+  address: 'ADVANCED LUXE LINE LTD, NM 34 St, Musanze',
   email: 'advancedluxeline6@gmail.com',
 };
 
@@ -231,8 +231,9 @@ async function initFooter() {
     name = 'ADVANCED LUXE LINE';
   }
 
-  const wa   = s.whatsapp_number || DEFAULT_SETTINGS.whatsapp_number;
-  const addr = s.address         || DEFAULT_SETTINGS.address;
+  const wa       = s.whatsapp_number || DEFAULT_SETTINGS.whatsapp_number;
+  const addrText = s.address         || DEFAULT_SETTINGS.address;
+  const mapsUrl  = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addrText)}`;
 
   document.title = name;
   const siteName = document.getElementById('siteName');
@@ -248,7 +249,7 @@ async function initFooter() {
           <div class="contact-icon">📍</div>
           <div class="contact-text">
             <strong>Location</strong>
-            <span>${addr}</span>
+            <span><a href="${mapsUrl}" target="_blank" rel="noreferrer">${addrText}</a></span>
           </div>
         </div>
         <div class="contact-item">
@@ -272,7 +273,8 @@ async function initFooter() {
             <a href="https://wa.me/${wa}" target="_blank" class="wa-link">Chat with us live</a>
           </div>
         </div>
-      </div>`;
+      </div>
+      <a href="${mapsUrl}" target="_blank" rel="noreferrer" class="btn" style="width: 100%; margin-top: 1.5rem; text-align: center; display: inline-block;">📍 Get Directions</a>`;
   }
 
   const waForm = document.getElementById('whatsappForm');

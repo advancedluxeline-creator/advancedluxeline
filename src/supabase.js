@@ -31,8 +31,8 @@ function getMockData(table) {
     settings: [
       { key: 'whatsapp_number', value: '250780000000' },
       { key: 'contact_email', value: 'info@crystalview.com' },
-      { key: 'address', value: '123 Serenity Blvd, Kigali, Rwanda' },
-      { key: 'guest_house_name', value: 'Crystal View Guest House' }
+      { key: 'address', value: 'ADVANCED LUXE LINE LTD, NM 34 St, Musanze' },
+      { key: 'guest_house_name', value: 'ADVANCED LUXE LINE LTD' }
     ],
     rooms: [
       { id: '1', name: 'Deluxe Room', price: 25000, description: 'Premium comfort with a view.', image_urls: ['/assets/room-deluxe.png'], features: ['Free WiFi', 'TV', 'Bathroom'] },
